@@ -31,5 +31,18 @@
             $this->assertEquals(1, $result);
         }
 
+        function testSave()
+        {
+          $store_name = "Shoe Palace";
+
+          $test_store = new Store($store_name);
+
+          $test_store->save();
+
+          $result = Store::getAll();
+
+          $this->assertEquals($test_store, $result[0]);
+        }
+
     }
 ?>
