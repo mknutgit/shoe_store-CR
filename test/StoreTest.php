@@ -16,7 +16,7 @@
     {
         protected function teardown()
         {
-            // Store::deleteAll();
+            Store::deleteAll();
         }
 
         function testgetId()
@@ -42,6 +42,21 @@
           $result = Store::getAll();
 
           $this->assertEquals($test_store, $result[0]);
+        }
+
+        function testgetAll()
+        {
+            $store_name = "Shoe Palace";
+            $test_store = new Store($store_name);
+            $test_store->save();
+
+            $store_name2 = "Shoe Town";
+            $test_store2 = new Store($store_name2);
+            $test_store2->save();
+
+            $result = Store::getAll();
+
+            $this->assertEquals([$test_store, $test_store2], $result);
         }
 
     }
