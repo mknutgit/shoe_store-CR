@@ -12,11 +12,11 @@
     $password = 'root';
     $DB = new PDO($server, $username, $password);
 
-    Class StoreTest extends PHPUnit_Framework_TestCase
+    Class BrandTest extends PHPUnit_Framework_TestCase
     {
         protected function teardown()
         {
-            // Brand::deleteAll();
+            Brand::deleteAll();
         }
 
         function testgetId()
@@ -30,5 +30,51 @@
 
             $this->assertEquals(1, $result);
         }
+
+        function testSave()
+        {
+          $brand_name = "Asics";
+
+          $test_brand = new Brand($brand_name);
+
+          $test_brand->save();
+
+          $result = Brand::getAll();
+
+          $this->assertEquals($test_brand, $result[0]);
+        }
+
+        function testgetAll()
+        {
+            $brand_name = "Asics";
+            $test_brand = new Brand($brand_name);
+            $test_brand->save();
+
+            $brand_name2 = "Ecco";
+            $test_brand2 = new Brand($brand_name2);
+            $test_brand2->save();
+
+            $result = Brand::getAll();
+
+            $this->assertEquals([$test_brand, $test_brand2], $result);
+        }
+
+        function testdeleteAll()
+        {
+            $brand_name = "Asics";
+            $test_brand = new Brand($brand_name);
+            $test_brand->save();
+
+            $brand_name2 = "Ecco";
+            $test_brand2 = new Brand($brand_name2);
+            $test_brand2->save();
+
+            Brand::deleteAll();
+
+            $result = Brand::getAll();
+
+            $this->assertEquals([], $result);
+        }
+
     }
 ?>
