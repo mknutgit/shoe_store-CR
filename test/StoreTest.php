@@ -92,17 +92,22 @@
         }
 
         function testUpdate()
-         {
-             $store_name = "Shoe Palace";
-             $test_store = new Store($store_name);
-             $test_store->save();
+        {
+            $store_name = "Shoe Palace";
+            $test_store = new Store($store_name);
+            $test_store->save();
 
             $new_store_name = "Shoe Tower";
 
             $test_store->update($new_store_name);
             //Assert
             $this->assertEquals("Shoe Tower", $test_store->getStoreName());
-         }
+        }
+
+        function testaddBrand()
+        {
+
+        }
 
 
     }
