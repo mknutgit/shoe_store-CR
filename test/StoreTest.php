@@ -59,5 +59,51 @@
             $this->assertEquals([$test_store, $test_store2], $result);
         }
 
+        function testdeleteAll()
+        {
+            $store_name = "Shoe Palace";
+            $test_store = new Store($store_name);
+            $test_store->save();
+
+            $store_name2 = "Shoe Town";
+            $test_store2 = new Store($store_name2);
+            $test_store2->save();
+
+            Store::deleteAll();
+
+            $result = Store::getAll();
+
+            $this->assertEquals([], $result);
+        }
+
+        function testfind()
+        {
+            $store_name = "Shoe Palace";
+            $test_store = new Store($store_name);
+            $test_store->save();
+
+            $store_name2 = "Shoe Town";
+            $test_store2 = new Store($store_name2);
+            $test_store2->save();
+
+            $result = Store::find($test_store->getId());
+
+            $this->assertEquals($test_store, $result);
+        }
+
+        function testUpdate()
+         {
+             $store_name = "Shoe Palace";
+             $test_store = new Store($store_name);
+             $test_store->save();
+
+            $new_store_name = "Shoe Tower";
+
+            $test_store->update($new_store_name);
+            //Assert
+            $this->assertEquals("Shoe Tower", $test_store->getStoreName());
+         }
+
+
     }
 ?>
