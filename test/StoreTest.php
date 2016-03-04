@@ -105,6 +105,22 @@
             $this->assertEquals("Shoe Tower", $test_store->getStoreName());
         }
 
+        function testdelete()
+        {
+            $store_name = "Shoe Palace";
+            $test_store = new Store($store_name);
+            $test_store->save();
+
+            $store_name2 = "Shoe Town";
+            $test_store2 = new Store($store_name2);
+            $test_store2->save();
+
+            $test_store->delete();
+            $result = Store::getAll();
+
+            $this->assertEquals([$test_store2], $result);
+        }
+
         function testaddBrand()
         {
             $store_name = "Shoe Palace";
