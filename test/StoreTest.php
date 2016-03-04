@@ -17,6 +17,7 @@
         protected function teardown()
         {
             Store::deleteAll();
+            Brand::deleteAll();
         }
 
         function testgetId()
@@ -106,7 +107,41 @@
 
         function testaddBrand()
         {
+            $store_name = "Shoe Palace";
+            $id = null;
+            $test_store = new Store($store_name, $id);
+            $test_store->save();
 
+            $brand_name = "Asics";
+            $id = null;
+            $test_brand = new Brand($brand_name, $id);
+            $test_brand->save();
+
+            $test_store->addBrand($test_brand);
+
+            $this->assertEquals($test_store->getBrands(), [$test_brand]);
+        }
+
+        function testgetBrands()
+        {
+            $store_name = "Shoe Palace";
+            $id = null;
+            $test_store = new Store($store_name, $id);
+            $test_store->save();
+
+            $brand_name = "Asics";
+            $id = null;
+            $test_brand = new Brand($brand_name, $id);
+            $test_brand->save();
+
+            $brand_name2 = "Nike";
+            $test_brand2 = new Brand($brand_name2, $id);
+            $test_brand2->save();
+
+            $test_store->addBrand($test_brand);
+            $test_store->addBrand($test_brand2);
+
+            $this->assertEquals($test_store->getBrands(), [$test_brand, $test_brand2]);
         }
 
 
