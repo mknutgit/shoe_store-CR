@@ -5,6 +5,8 @@
 
     $app = new Silex\Application();
 
+    $app['debug'] = true;
+
     $server = 'mysql:host=localhost;dbname=shoes';
     $username = 'root';
     $password = 'root';
@@ -36,9 +38,43 @@
     });
 
     ///*render individual store page with brands*///
-    $app->get("/stores/{id}", function($id) use ($app) {
+    $app->get("/store/{id}", function($id) use ($app) {
         $store = Store::find($id);
         return $app['twig']->render('store.html.twig', array('store' => $store, 'brands' => $store->getBrands(), 'all_brands' => Brand::getAll()));
+    });
+
+    ///*render edit store page*///
+    $app->get("/store/{id}/edit", function($id) use($app){
+       $store = Store::find($id);
+       return $app['twig']->render('store_edit.html.twig', array('store' => $store));
+    });
+
+    ///*update individual store name*///
+    $app->patch("store_update/{id}", function($id) use ($app) {
+        $store_name = $_POST['store_name'];
+        $store = Store::find($id);
+        $store->update($store_name);
+        return $app['twig']->render('store.html.twig', array('store' => $store, 'brands' => $store->getBrands(), 'all_brands' => Brand::getAll()));
+    });
+
+    ///*delete single store*///
+    $app->delete("/delete_store/{id}", function($id) use ($app) {
+        $store = Store::find($id);
+        $store->delete();
+        return $app['twig']->render('stores_home.html.twig', array('stores' => Store::getAll()));
+    });
+
+    ///*delete all stores*///
+    $app->post("/delete_stores", function() use ($app) {
+       Store::deleteAll();
+       return $app['twig']->render('stores_home.html.twig', array('stores' => Store::getAll()));
+    });
+
+/////** Brands **////////
+
+    ///*rendor brands home page*///
+    $app->get("/brands", function() use ($app) {
+         return $app['twig']->render('brands_home.html.twig', array('brands' => Brand::getAll()));
     });
 
 
