@@ -49,6 +49,12 @@
             $GLOBALS['DB']->exec("DELETE FROM brands;");
         }
 
+        function delete()
+		{
+		   $GLOBALS['DB']->exec("DELETE FROM brands WHERE id = {$this->getId()};");
+		   $GLOBALS['DB']->exec("DELETE FROM stores_brands WHERE brand_id = {$this->getId()};");
+		}
+
         static function find($search_id)
         {
             $found_brand = null;
